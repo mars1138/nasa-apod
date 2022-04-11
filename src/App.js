@@ -17,8 +17,8 @@ function App() {
   useEffect(() => {
     try {
       fetch(apiUrl)
-        .then((response) => response.json())
-        .then((results) => setLoadedApods(results));
+        .then(response => response.json())
+        .then(results => setLoadedApods(results));
 
       setIsLoading(false);
     } catch (err) {
@@ -39,8 +39,8 @@ function App() {
   return (
     <React.Fragment>
       <header>
-        <div className="tc">
-          <h1 className="f1">NASA Astronomy Pictures of the Day</h1>
+        <div className="tc flex flex-column bg-light-green bb b--gray">
+          <h1 className="f1 w-100">NASA Astronomy Pictures of the Day</h1>
           {/* <SearchBox searchChange={onSearchChange} /> */}
         </div>
       </header>

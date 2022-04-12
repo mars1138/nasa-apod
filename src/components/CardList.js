@@ -4,7 +4,7 @@ const CardList = (props) => {
   const { apodList } = props;
 
   return (
-    <div>
+    <div className="flex flex-wrap justify-center">
       {apodList.map((apod, i) => {
         return (
           <Card

@@ -1,10 +1,10 @@
 import Card from './Card';
 
 const CardList = (props) => {
-  const { apodList } = props;
+  const { apodList, saveToFavorites } = props;
 
   return (
-    <div className="flex flex-wrap justify-center">
+    <div className="flex flex-wrap justify-center w-80-l ml-auto mr-auto">
       {apodList.map((apod, i) => {
         return (
           <Card
@@ -13,6 +13,7 @@ const CardList = (props) => {
             date={apod.date}
             desc={apod.explanation}
             url={apod.url}
+            saveToFavorites={saveToFavorites}
           />
         );
       })}

@@ -1,13 +1,13 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import CardList from './components/CardList';
-// import SearchBox from '../components/SearchBox';
-// import ErrorBoundary from '../components/ErrorBoundary';
-import { API_KEY } from './Constants';
+import SearchBox from './components/SearchBox';
+import ErrorBoundary from './components/ErrorBoundary';
+// import { API_KEY } from './Constants';
 import './App.css';
 
-const count = 8;
-const apiKey = API_KEY;
-const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${count}`;
+// const count = 8;
+// const apiKey = API_KEY;
+// const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${count}`;
 
 function App() {
   // const [loadedApods, setLoadedApods] = useState([]);
@@ -137,7 +137,7 @@ function App() {
   ];
 
   const [isLoading, setIsLoading] = useState(false);
-  // const [searchfield, setSearchField] = useState('');
+  const [searchField, setSearchField] = useState('');
 
   useEffect(() => {
     // try {
@@ -150,22 +150,34 @@ function App() {
     // }
   }, []);
 
-  // using arrow function allows this to be set to App class
-  // const onSearchChange = (event) => {
-  //   setSearchField(event.target.value);
-  // };
+  const onSearchChange = (event) => {
+    setSearchField(event.target.value);
+  };
 
-  // const filteredApods = apods.filter((picture) => {
-  //   return picture.title.toLowerCase().includes(searchfield.toLowerCase());
-  // });
-  // console.log(filteredApods);
+  const onSaveToFavorites = (event) => {
+    console.log('added to favorites!');
+  };
+
+  const filteredApods = loadedApods.filter((picture) => {
+    return picture.title.toLowerCase().includes(searchField.toLowerCase());
+  });
+
+  console.log(filteredApods);
   console.log('loadedApods: ', loadedApods);
   return (
     <React.Fragment>
       <header>
-        <div className="tc flex flex-column bg-light-green bb b--gray">
-          <h1 className="f1 w-100">NASA Astronomy Pictures of the Day</h1>
-          {/* <SearchBox searchChange={onSearchChange} /> */}
+        <div className="tc flex flex-column items-center bg-dark-blue bb b--gray lightest-blue pl3 pr3 w-100">
+          <h1 className="f2 f1-l w-100 ">NASA Astronomy Pictures of the Day</h1>
+          <div className="flex flex-wrap justify-center items-center mb4 w-100">
+            <div className="grow ma2">
+              <h3 className="bg-green pt1 pb1 pl3 pr3 br2 white">Favorites</h3>
+            </div>
+            <div className="grow ma2">
+              <h3 className="bg-green pt1 pb1 pl3 pr3 br2 white">Load More</h3>
+            </div>
+            <SearchBox searchChange={onSearchChange} />
+          </div>
         </div>
       </header>
       {isLoading && (
@@ -174,7 +186,7 @@ function App() {
         </div>
       )}
       {!isLoading && loadedApods && (
-        <div className="tc bg-light-green">
+        <div className="bg-blue min-vh-100 pt3 pb3">
           <Suspense
             fallback={
               <div className="tc">
@@ -182,32 +194,16 @@ function App() {
               </div>
             }
           >
-            {/* <ErrorBoundary> */}
-            <CardList apodList={loadedApods} />
-            {/* </ErrorBoundary> */}
+            <ErrorBoundary>
+              <CardList
+                apodList={filteredApods}
+                saveToFavorites={onSaveToFavorites}
+              />
+            </ErrorBoundary>
           </Suspense>
         </div>
       )}
     </React.Fragment>
-
-    //   <h1 className="f1">Loading...</h1>
-    // ) : (
-    //   <div className="tc">
-    //     <header>
-    //       <h1 className="f1">NASA Astronomy Pictures of the Day</h1>
-    //       {/* <SearchBox searchChange={onSearchChange} /> */}
-    //     </header>
-    //     <Suspense
-    //       fallback={
-    //         <div className="tc">
-    //           <h1>Loading Pictures....</h1>
-    //         </div>
-    //       }
-    //     >
-    //       {/* <ErrorBoundary> */}
-    //       <CardList apodList={apods} />;{/* </ErrorBoundary> */}
-    //     </Suspense>
-    //   </div>
   );
 }
 

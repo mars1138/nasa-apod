@@ -1,12 +1,12 @@
 import Card from './Card';
 
-const CardList = (props) => {
+const CardList = props => {
   const { apodList, saveFavorite, home, removeFavorite, favorites } = props;
 
   let apodArray = [];
 
   if (home) {
-    apodList.forEach((apod) => apodArray.push(apod));
+    apodList.forEach(apod => apodArray.push(apod));
   } else {
     for (const key in apodList) {
       apodArray.push(apodList[key]);
@@ -27,6 +27,7 @@ const CardList = (props) => {
             url={apod.url}
             saveFavorite={saveFavorite}
             removeFavorite={removeFavorite}
+            favorites={favorites}
             home={home}
           />
         );

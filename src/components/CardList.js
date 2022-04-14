@@ -1,11 +1,23 @@
 import Card from './Card';
 
 const CardList = (props) => {
-  const { apodList, saveToFavorites } = props;
+  const { apodList, saveFavorite, home, removeFavorite, favorites } = props;
+
+  let apodArray = [];
+
+  if (home) {
+    apodList.forEach((apod) => apodArray.push(apod));
+  } else {
+    for (const key in apodList) {
+      apodArray.push(apodList[key]);
+    }
+  }
+
+  console.log('apodArray: ', apodArray);
 
   return (
     <div className="flex flex-wrap justify-center w-80-l ml-auto mr-auto">
-      {apodList.map((apod, i) => {
+      {apodArray.map((apod, i) => {
         return (
           <Card
             key={i}
@@ -13,7 +25,9 @@ const CardList = (props) => {
             date={apod.date}
             desc={apod.explanation}
             url={apod.url}
-            saveToFavorites={saveToFavorites}
+            saveFavorite={saveFavorite}
+            removeFavorite={removeFavorite}
+            home={home}
           />
         );
       })}

@@ -1,6 +1,5 @@
 import React from 'react';
 
-// destructure props right away, without having to do declarations inside function body
 const Card = ({
   title,
   date,

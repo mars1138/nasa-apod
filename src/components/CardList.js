@@ -1,23 +1,11 @@
 import Card from './Card';
 
-const CardList = props => {
+const CardList = (props) => {
   const { apodList, saveFavorite, home, removeFavorite, favorites } = props;
-
-  let apodArray = [];
-
-  if (home) {
-    apodList.forEach(apod => apodArray.push(apod));
-  } else {
-    for (const key in apodList) {
-      apodArray.push(apodList[key]);
-    }
-  }
-
-  console.log('apodArray: ', apodArray);
 
   return (
     <div className="flex flex-wrap justify-center w-80-l ml-auto mr-auto">
-      {apodArray.map((apod, i) => {
+      {apodList.map((apod, i) => {
         return (
           <Card
             key={i}

@@ -8,8 +8,10 @@ import './App.css';
 // TESTING
 import { loadedApods } from './Constants';
 // import { favoriteApods } from './Constants';
+// localStorage.clear();
 ///
 
+const saveConfirmed = document.querySelector('.save-confirmed');
 // const count = 15;
 // const apiKey = API_KEY;
 // const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${count}`;
@@ -22,8 +24,7 @@ function App() {
 
   const [isLoading, setIsLoading] = useState(false);
   const [searchField, setSearchField] = useState('');
-  const [saveClicked, setSaveClicked] = useState(false);
-  const [favoriteApods, setFavoriteApods] = useState({});
+  const [favoriteApods, setFavoriteApods] = useState([]);
 
   const onFetchTask = () => {
     setIsLoading(true);
@@ -38,62 +39,56 @@ function App() {
     // console.log('loadedApods: ', loadedApods);
   };
 
-  const onSearchChange = event => {
+  const onSearchChange = (event) => {
     setSearchField(event.target.value);
   };
 
   const onSetHomePage = () => {
     setHomePage(!homePage);
-
-    // check for clearing of error from favorites view
   };
 
-  const onSaveFavorite = event => {
-    console.log('onSaveFav target: ', event.target);
-    loadedApods.forEach(apod => {
-      if (apod.url === event.target.id && !favoriteApods[apod.url]) {
-        console.log('favoriteApods: ', !favoriteApods[apod.url]);
+  const onSaveFavorite = (event) => {
+    const alreadySaved = favoriteApods.find((el) => el.url === event.target.id);
+    console.log('alreadysaved?: ', alreadySaved);
+    if (!event.target.id || alreadySaved) return;
 
-        let currentApods = {};
-        if (!favoriteApods) {
-          currentApods[apod.url] = apod;
-          console.log('currentApods: ', currentApods);
-        } else {
-          currentApods = { ...favoriteApods };
-          currentApods[apod.url] = apod;
-        }
-        setFavoriteApods(currentApods);
-        // console.log('favorites updated: ', favoriteApods);
-        localStorage.setItem('nasaFavorites', JSON.stringify(favoriteApods));
-        setSaveClicked(true);
-        setTimeout(() => {
-          setSaveClicked(false);
-          console.log('timer done');
-        }, 2000);
-      }
+    const newFavorite = loadedApods.filter((apod) => {
+      return apod.url === event.target.id;
     });
 
-    //     // Set Favorites in localStorage
+    let newArray = [...favoriteApods];
+    newArray.push(newFavorite[0]);
+    localStorage.setItem('nasaFavorites', JSON.stringify(newArray));
+    setFavoriteApods(newArray);
+
+    saveConfirmed.style.opacity = 1;
+
+    setTimeout(() => {
+      saveConfirmed.style.opacity = 0;
+    }, 1250);
   };
 
-  const onRemoveFavorite = event => {
-    console.log('Favorite removed!');
-    if (favoriteApods[event.target.id]) {
-      let currentApods = { ...favoriteApods };
-      delete currentApods[event.target.id];
-      setFavoriteApods(currentApods);
-      // Set Favorites in localStorage
-      localStorage.setItem('nasaFavorites', JSON.stringify(favoriteApods));
-    }
+  const onRemoveFavorite = (event) => {
+    let currentApods = favoriteApods.filter(
+      (apod) => apod.url !== event.target.id
+    );
+    setFavoriteApods(currentApods);
+    localStorage.setItem('nasaFavorites', JSON.stringify(currentApods));
   };
 
-  const filteredApods = loadedApods.filter(apod => {
+  const getFavorites = () => {
+    const currentFavs = JSON.parse(localStorage.getItem('nasaFavorites'));
+    console.log('currentFavs: ', currentFavs);
+    if (currentFavs) setFavoriteApods(currentFavs);
+  };
+
+  const filteredApods = loadedApods.filter((apod) => {
     return apod.title.toLowerCase().includes(searchField.toLowerCase());
   });
-  // console.log(filteredApods);
 
   useEffect(() => {
     onFetchTask();
+    getFavorites();
   }, []);
 
   return (
@@ -140,32 +135,15 @@ function App() {
           </div>
         )}
 
-        {homePage && !isLoading && loadedApods && (
+        {!isLoading && loadedApods && (
           <ErrorBoundary>
             <CardList
-              apodList={filteredApods}
+              apodList={homePage ? filteredApods : favoriteApods}
               saveFavorite={onSaveFavorite}
-              home={homePage}
-            />
-          </ErrorBoundary>
-        )}
-
-        {!homePage && !isLoading && favoriteApods && (
-          <ErrorBoundary>
-            <CardList
-              apodList={favoriteApods}
               removeFavorite={onRemoveFavorite}
-              favorites={favoriteApods}
               home={homePage}
             />
           </ErrorBoundary>
-        )}
-
-        {saveClicked && (
-          <div className="save-confirmed">
-            <h1 className="black">FAVORITE ADDED!</h1>
-            <img src="../img/rocket2.png" alt="Rocket Loading Animation" />
-          </div>
         )}
       </main>
     </React.Fragment>

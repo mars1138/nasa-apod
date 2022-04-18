@@ -3,14 +3,12 @@ import Header from './components/Header';
 import Loader from './components/Loader';
 import CardList from './components/CardList';
 import ErrorBoundary from './components/ErrorBoundary';
-import { API_KEY } from './Constants';
 import './App.css';
 import RocketLoader from './img/rocket2.svg';
 
 const saveConfirmed = document.querySelector('.save-confirmed');
-const count = 21;
-// const apiKey = process.env(API_KEY);
-const apiKey = API_KEY;
+const count = 18;
+const apiKey = process.env(API_KEY);
 const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${count}`;
 
 function App() {

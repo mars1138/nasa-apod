@@ -25,14 +25,8 @@ function App() {
     setIsLoading(true);
     try {
       fetch(apiUrl)
-        .then((response) => {
-          console.log(response);
-          return response.json();
-        })
-        .then((results) => {
-          console.log(results);
-          return setLoadedApods(results);
-        });
+        .then((response) => response.json())
+        .then((results) => setLoadedApods(results));
     } catch (err) {
       console.log('Error retrieving pictures!');
     }
@@ -49,7 +43,6 @@ function App() {
 
   const onSaveFavorite = (event) => {
     const alreadySaved = favoriteApods.find((el) => el.url === event.target.id);
-    console.log('alreadysaved?: ', alreadySaved);
     if (!event.target.id || alreadySaved) return;
 
     const newFavorite = loadedApods.filter((apod) => {
@@ -78,7 +71,6 @@ function App() {
 
   const getFavorites = () => {
     const currentFavs = JSON.parse(localStorage.getItem('nasaFavorites'));
-    console.log('currentFavs: ', currentFavs);
     if (currentFavs) setFavoriteApods(currentFavs);
   };
 

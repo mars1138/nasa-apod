@@ -10,8 +10,6 @@ const Card = ({
   removeFavorite,
   home,
 }) => {
-  console.log('Card img url: ', url);
-
   const cardClass =
     'tc bg-light-green dib br3 pa3 ma3 bw2 shadow-5 flex flex-column' +
     (home ? ' vh-75 w-30-l w-40-m' : ' w-50-ns');

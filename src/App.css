@@ -19,6 +19,9 @@ h1 {
   font-weight: 100;
 }
 
+p {
+  text-overflow: ellipsis;
+}
 .save-confirmed {
   background: rgb(221, 230, 102);
   padding: 8px 16px;
@@ -34,3 +37,17 @@ h1 {
 .save-confirmed h1 {
   color: black;
 }
+
+/* .line-rocket1 {
+  animation: line-rocket1-flame 200ms infinite linear;
+  transform-origin: 34px 70px;
+}
+
+@keyframes line-rocket1-flame {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+} */

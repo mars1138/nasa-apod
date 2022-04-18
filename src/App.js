@@ -8,7 +8,7 @@ import RocketLoader from './img/rocket2.svg';
 
 const saveConfirmed = document.querySelector('.save-confirmed');
 const count = 18;
-const apiKey = process.env.API_KEY;
+const apiKey = process.env.REACT_APP_API_KEY;
 const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${count}`;
 
 function App() {

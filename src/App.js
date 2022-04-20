@@ -7,12 +7,9 @@ import { ParticlesContainer } from './components/Particles.tsx';
 import './App.css';
 import RocketLoader from './img/rocket2.svg';
 
-import { API_KEY } from './Constants';
-
 const saveConfirmed = document.querySelector('.save-confirmed');
 const count = 18;
-// const apiKey = process.env.REACT_APP_API_KEY;
-const apiKey = API_KEY;
+const apiKey = process.env.REACT_APP_API_KEY;
 const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${count}`;
 
 function App() {

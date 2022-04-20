@@ -38,16 +38,11 @@ p {
   color: black;
 }
 
-/* .line-rocket1 {
-  animation: line-rocket1-flame 200ms infinite linear;
-  transform-origin: 34px 70px;
+.particles {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
 }
-
-@keyframes line-rocket1-flame {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-} */

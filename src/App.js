@@ -3,12 +3,16 @@ import Header from './components/Header';
 import Loader from './components/Loader';
 import CardList from './components/CardList';
 import ErrorBoundary from './components/ErrorBoundary';
+import { ParticlesContainer } from './components/Particles.tsx';
 import './App.css';
 import RocketLoader from './img/rocket2.svg';
 
+import { API_KEY } from './Constants';
+
 const saveConfirmed = document.querySelector('.save-confirmed');
 const count = 18;
-const apiKey = process.env.REACT_APP_API_KEY;
+// const apiKey = process.env.REACT_APP_API_KEY;
+const apiKey = API_KEY;
 const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}&count=${count}`;
 
 function App() {
@@ -90,6 +94,7 @@ function App() {
 
   return (
     <React.Fragment>
+      <ParticlesContainer />
       <Header
         home={homePage}
         setHomePage={onSetHomePage}
@@ -97,7 +102,7 @@ function App() {
         searchChange={onSearchChange}
       />
 
-      <main className="bg-black min-vh-100 pt3 pb3">
+      <main className=" min-vh-100 pt3 pb3">
         {isLoading ||
           (!loadedApods.length && <Loader rocketLoader={RocketLoader} />)}
 
